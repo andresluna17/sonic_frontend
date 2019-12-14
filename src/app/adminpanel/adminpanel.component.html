@@ -1,0 +1,95 @@
+<div class="main-wrapper">
+  <div class="app" id="app">
+    <header class="header">
+      <div class="header-block header-block-collapse d-lg-none d-xl-none">
+        <button class="collapse-btn" id="sidebar-collapse-btn">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+      <div class="header-block header-block-buttons"></div>
+      <div class="header-block header-block-nav">
+        <ul class="nav-profile">
+          <li class="profile dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div
+                class="img"
+                style="background-image: url('https://cdn3.f-cdn.com/contestentries/1269942/15600440/5a991c82be987_thumb900.jpg')"
+              ></div>
+              <span class="name">
+                {{ usuario.perNombre }} {{ usuario.perApellido }}
+              </span>
+            </a>
+            <div
+              class="dropdown-menu profile-dropdown-menu"
+              aria-labelledby="dropdownMenu1"
+            >
+              <a class="dropdown-item" (click)="lo()">
+                <i class="fa fa-power-off icon"></i> Cerrar Sesion
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <aside class="sidebar">
+      <div class="sidebar-container">
+        <div class="sidebar-header">
+          <div class="brand">
+            <div class="logo">
+              <span class="l l1"></span>
+              <span class="l l2"></span>
+              <span class="l l3" style="background-color: red;"></span>
+              <span class="l l4"></span>
+              <span class="l l5"></span>
+            </div>
+            Sonic
+          </div>
+        </div>
+        <nav class="menu">
+          <ul class="sidebar-menu metismenu" id="sidebar-menu">
+            <li routerLinkActive="active">
+              <a routerLink="/adminpanel/Eventos">
+                <i class="fa fa-calendar"></i> Eventos</a
+              >
+            </li>
+            <li *ngIf="roles == 'true'" routerLinkActive="active">
+              <a routerLink="/adminpanel/Equipo">
+                <i class="fa fa-user-plus"></i> Equipo
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div
+      class="sidebar-mobile-menu-handle"
+      id="sidebar-mobile-menu-handle"
+    ></div>
+    <div class="mobile-menu-handle"></div>
+    <article class="content dashboard-page">
+      <router-outlet></router-outlet>
+    </article>
+    <footer class="footer">
+      <div class="footer-block author">
+        <ul>
+          <li>Creado Por Jaime Andres Luna</li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</div>
+<!-- Reference block for JS -->
+<div class="ref" id="ref">
+  <div class="color-primary"></div>
+  <div class="chart">
+    <div class="color-primary"></div>
+    <div class="color-secondary"></div>
+  </div>
+</div>

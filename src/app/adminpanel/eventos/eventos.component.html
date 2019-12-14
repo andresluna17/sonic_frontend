@@ -1,0 +1,219 @@
+<div class="title-block">
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h1 class="title">Tabla Eventos</h1>
+      <p class="title-description">Todos los Eventos</p>
+    </div>
+    <div class="col-6 col-md-4">
+      <div class="form-inline">
+        <input
+          type="text"
+          class="form-control underlined"
+          [(ngModel)]="seachear.buscar"
+          placeholder="  Buscar"
+        />
+        <button
+          type="button"
+          class="btn btn-oval btn-primary"
+          (click)="buscar()"
+        >
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="roles == 'true'" class="col-6 col-md-4">
+      <button
+        class="lo btn btn-oval btn-primary"
+        type="button"
+        (click)="showDialog()"
+      >
+        <i class="fa fa-plus"></i> Nuevo Evento
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-4" *ngFor="let Eventos of eventos">
+    <div class="card card-primary">
+      <div class="card-header">
+        <div class="header-block">
+          <h4>Nombre:</h4>
+          <p>{{ Eventos.eveNombre }}</p>
+        </div>
+      </div>
+      <div class="card-block">
+        <p-scrollPanel [style]="{ width: '100%', height: '100px' }">
+          <h5>Ubicacion:</h5>
+          <p>{{ Eventos.eveUbicacion }}</p>
+          <h5>Fecha:</h5>
+          <p>{{ Eventos.eveFecha }}</p>
+          <h5>Categoria:</h5>
+          <p>{{ Eventos.nombreCategoria }}</p>
+          <h5>Cliente:</h5>
+          <p>{{ Eventos.cliente.perNombre }} {{ Eventos.cliente.perNombre }}</p>
+          <h5>Lider:</h5>
+          <p>{{ Eventos.lider.perNombre }} {{ Eventos.lider.perNombre }}</p>
+        </p-scrollPanel>
+      </div>
+      <div class="card-footer">
+        <button
+          type="button"
+          routerLink="/adminpanel/Evento/{{ Eventos.eveId }}"
+          class="btn btn-oval btn-primary"
+        >
+          <i class="fa fa-mouse-pointer"></i> Seleccionar
+        </button>
+        <button
+          *ngIf="roles == 'true'"
+          type="button"
+          (click)="eliminar(Eventos.eveId)"
+          class="btn btn-oval btn-danger"
+        >
+          <i class="fa fa-trash-o"></i> eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Nuevo Evento"
+  [(visible)]="display"
+  [responsive]="true"
+  showEffect="fade"
+  [modal]="true"
+  [style]="{ width: '600px' }"
+  [maximizable]="true"
+>
+  <div class="ui-g ui-fluid" *ngIf="evento">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Nombre">Nombre Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="eveNombre"
+          required="required"
+          [(ngModel)]="evento.eventoNombre"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">Fecha Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          [(ngModel)]="evento.fecha"
+          required="required"
+          type="date"
+          dateFormat="yy-mm-dd"
+        />
+        <input
+          [(ngModel)]="evento.hora"
+          required="required"
+          type="time"
+          min="06:00"
+          max="23:59"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">Direccion Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="eveUbicacion"
+          required="required"
+          [(ngModel)]="evento.Ubicacion"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">Categoria Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <select [(ngModel)]="evento.categoria" name="" id="">
+          <option
+            *ngFor="let categoria of categorias"
+            value="{{ categoria.catId }}"
+            >{{ categoria.catNombre }}</option
+          >
+        </select>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">lider Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <select [(ngModel)]="evento.lider" name="" id="">
+          <option
+            *ngFor="let categoria of lideres"
+            value="{{ categoria.usuId }}"
+            >{{ categoria.perNombre }} {{ categoria.perApellido }}</option
+          >
+        </select>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="color">Nombre Cliente</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="cliente"
+          required="required"
+          [(ngModel)]="evento.nombre"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="color">Apellido Cliente</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="cliente"
+          required="required"
+          required="required"
+          [(ngModel)]="evento.apellidos"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="color">Documento Cliente</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          required="required"
+          id="cliente"
+          type="number"
+          [(ngModel)]="evento.documento"
+        />
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button
+        type="button"
+        pButton
+        icon="fa fa-check"
+        (click)="Crear()"
+        label="Crear"
+      ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-toast [style]="{ marginTop: '80px' }" key="tc"></p-toast>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

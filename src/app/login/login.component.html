@@ -1,0 +1,53 @@
+<div class="auth">
+  <div class="auth-container">
+    <div class="card">
+      <header class="auth-header">
+        <h1 class="auth-title">
+          <div class="logo">
+            <span class="l l1"></span>
+            <span class="l l2"></span>
+            <span class="l l3"></span>
+            <span class="l l4"></span>
+            <span class="l l5"></span>
+          </div>
+          Sonic
+        </h1>
+      </header>
+      <div class="auth-content">
+        <p class="text-center">LOGIN</p>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="email"
+            [(ngModel)]="dat.username"
+            [email]="true"
+            class="form-control underlined"
+            name="username"
+            id="username"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control underlined"
+            [(ngModel)]="dat.contrasena"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <button (click)="login()" class="btn btn-block btn-primary">
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast [style]="{ marginTop: '80px' }" key="tc"></p-toast>

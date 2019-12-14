@@ -1,0 +1,340 @@
+<div class="title-block">
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h1 class="title">Detalles del evento</h1>
+      <p class="title-description">
+        <span>{{ evento.eveNombre }}</span>
+      </p>
+    </div>
+    <div class="col-6 col-md-4"></div>
+    <div class="col-6 col-md-4" *ngIf="roles == 'true'">
+      <button
+        class="lo btn btn-oval btn-primary"
+        type="button"
+        (click)="showDialog()"
+      >
+        <i class="fa fa-plus"></i> editar evento
+      </button>
+    </div>
+  </div>
+</div>
+<p-table
+  [columns]="cols"
+  [value]="invitados"
+  selectionMode="single"
+  (onRowSelect)="onRowSelect($event)"
+  [paginator]="true"
+  [rows]="5"
+>
+  <ng-template pTemplate="caption">
+    lista invitados
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        {{ rowData[col.field] }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template *ngIf="roles == 'true'" pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button
+        type="button"
+        pButton
+        icon="fa fa-plus"
+        (click)="showDialogToAdd()"
+        label="Añadir"
+      ></button>
+    </div>
+  </ng-template>
+</p-table>
+<hr />
+
+<p-table
+  [columns]="cols2"
+  [value]="empleados"
+  selectionMode="single"
+  (onRowSelect)="onRowSelect2($event)"
+  [paginator]="true"
+  [rows]="5"
+>
+  <ng-template pTemplate="caption">
+    lista equipo del evento
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        {{ rowData[col.field] }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template *ngIf="roles == 'true'" pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button
+        type="button"
+        pButton
+        icon="fa fa-plus"
+        (click)="showDialogToAdd2()"
+        label="Asignar"
+      ></button>
+    </div>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  header="empleado Asignacion"
+  [(visible)]="displayDialog2"
+  [focusOnShow]="false"
+  [responsive]="true"
+  showEffect="fade"
+  [modal]="true"
+  [style]="{ width: '300px' }"
+>
+  <div class="ui-g ui-fluid" *ngIf="close2">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">nombre</label>
+      </div>
+      <div class="ui-g-8">
+        <p>{{ empleado.perNombre }}</p>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">apellido</label>
+      </div>
+      <div class="ui-g-8">
+        <p>{{ empleado.perApellido }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g ui-fluid" *ngIf="close2 == false">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">empleados disponibles</label>
+      </div>
+      <div class="ui-g-8">
+        <select [(ngModel)]="empleadoid" name="" id="">
+          <option
+            *ngFor="let empleado of empleadosno"
+            value="{{ empleado.perId }}"
+            >{{ empleado.perNombre }} {{ empleado.perApellido }}</option
+          >
+        </select>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button
+        *ngIf="close2"
+        type="button"
+        pButton
+        icon="fa fa-close"
+        (click)="eliminarempleado()"
+        label="Eliminar"
+      ></button>
+      <button
+        *ngIf="close2 == false"
+        type="button"
+        pButton
+        icon="fa fa-check"
+        (click)="empleaodenviar()"
+        label="Enviar"
+      ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header="invitado info"
+  [(visible)]="displayDialog"
+  [focusOnShow]="false"
+  [responsive]="true"
+  showEffect="fade"
+  [(closable)]="close"
+  [modal]="true"
+  [style]="{ width: '300px' }"
+>
+  <div class="ui-g ui-fluid" *ngIf="invitado">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="vin">nombre</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="vin"
+          [(disabled)]="rol"
+          [(ngModel)]="invitado.perNombre"
+          autofocus
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">apellido</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="year"
+          [(disabled)]="rol"
+          [(ngModel)]="invitado.perApellido"
+        />
+      </div>
+    </div>
+    <div *ngIf="newinvitado" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">Documento</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          type="number"
+          id="year"
+          [(ngModel)]="invitado.documento"
+        />
+      </div>
+    </div>
+    <div *ngIf="newinvitado" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">numero Mesa</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText type="number" id="year" [(ngModel)]="invitado.mesa" />
+      </div>
+    </div>
+    <div *ngIf="newinvitado == false" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">Asistencia</label>
+      </div>
+      <div class="ui-g-8">
+        <p-inputSwitch [(ngModel)]="invitado.invEstado"></p-inputSwitch>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button
+        *ngIf="newinvitado"
+        type="button"
+        pButton
+        icon="fa fa-close"
+        (click)="cancelar()"
+        label="cancelar"
+      ></button>
+      <button
+        *ngIf="newinvitado == false"
+        type="button"
+        pButton
+        icon="fa fa-close"
+        (click)="delete()"
+        label="Eliminar"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="fa fa-check"
+        (click)="save()"
+        label="Enviar"
+      ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog
+  header="Editar Evento"
+  [(visible)]="display"
+  [responsive]="true"
+  showEffect="fade"
+  [modal]="true"
+  [style]="{ width: '600px' }"
+  [maximizable]="true"
+>
+  <div class="ui-g ui-fluid" *ngIf="evento">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Nombre">Nombre Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="eveNombre"
+          required="required"
+          [(ngModel)]="evento.eveNombre"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">Direccion Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <input
+          pInputText
+          id="eveUbicacion"
+          required="required"
+          [(ngModel)]="evento.eveUbicacion"
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">Categoria Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <select [(ngModel)]="evento.eveCategoria" name="" id="">
+          <option
+            *ngFor="let categoria of categorias"
+            value="{{ categoria.catId }}"
+            >{{ categoria.catNombre }}</option
+          >
+        </select>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Direccion">lider Evento</label>
+      </div>
+      <div class="ui-g-8">
+        <select [(ngModel)]="evento.persona_perId" name="" id="">
+          <option
+            *ngFor="let categoria of lideres"
+            value="{{ categoria.usuId }}"
+            >{{ categoria.perNombre }} {{ categoria.perApellido }}</option
+          >
+        </select>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button
+        type="button"
+        pButton
+        icon="fa fa-check"
+        (click)="actualizar()"
+        label="Actualizar"
+      ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-toast [style]="{ marginTop: '80px' }" key="tc"></p-toast>
