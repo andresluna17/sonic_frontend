@@ -25,7 +25,7 @@
     "alertifyjs": "^1.13.1",
     "angular-bootstrap-datetimepicker": "^4.0.2",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "ngx-tempusdominus-bootstrap": "^1.0.1",
     "open-iconic": "^1.1.1",
